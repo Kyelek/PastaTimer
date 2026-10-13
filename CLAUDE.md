@@ -59,4 +59,5 @@ El usuario **no quiere usar Android Studio**. Todas las compilaciones nativas se
 - Pedir las imágenes de las pastas al implementar el listado.
 - Si se ve una mejora, **preguntar antes de implementarla**.
 - Ir paso a paso; la publicación en Google Play se hace junto con el usuario.
+- Con `expo-dev-client` instalado, `npm start` abre en modo development build: para probar en **Expo Go** se usa **`npm run start:go`** (o `s` en la terminal de Metro).
 - Cuando una tarea añada carpetas o archivos nuevos, dependencias, o toque `metro.config.js`/`app.json`, avisar al usuario de que **reinicie Metro con `npx expo start -c`**: en Windows, un Metro ya arrancado no siempre ve las carpetas nuevas y da `Unable to resolve`.
