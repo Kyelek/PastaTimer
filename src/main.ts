@@ -5,13 +5,23 @@ import 'expo';
 import { AppRegistry, Image, Platform, processColor } from 'react-native';
 import { mount } from '@ng-native/platform';
 import { currentConditions, deviceTokens, watchConditions } from '@ng-native/device';
-import { getFabricUIManager, registerPlatformComponents } from '@ng-native/fabric';
+import { getFabricUIManager, registerPlatformComponents, styleSheetOf } from '@ng-native/fabric';
+import { loadFonts } from '@ng-native/expo/fonts';
+import { appProviders } from './app/app.config.ts';
 import { App } from './app/app.ts';
+import { EstilosGlobales } from './app/estilos-globales.ts';
 
 registerPlatformComponents(Platform.OS);
 
+const estilosGlobales = styleSheetOf(EstilosGlobales);
+
 AppRegistry.registerRunnable('main', ({ rootTag }: { rootTag: number | string }) => {
+  // Registra las fuentes. No hace falta esperar: el texto se redibuja al cargar cada una.
+  void loadFonts(estilosGlobales).catch((error: unknown) => console.error(error));
+
   const app = mount(Number(rootTag), App, getFabricUIManager(), {
+    providers: appProviders,
+    globalStyles: estilosGlobales,
     // Colours, as the integers the platform wants.
     processColor,
     // What `@media` resolves against. Without it every media query is false and a responsive

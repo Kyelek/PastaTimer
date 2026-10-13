@@ -8,7 +8,7 @@
     ],
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "automatic",
+    "userInterfaceStyle": "light",
     "android": {
       "package": "com.kyelek.pastatimer",
       "adaptiveIcon": {
@@ -26,7 +26,8 @@
       }
     },
     "plugins": [
-      "@ng-native/metro"
+      "@ng-native/metro",
+      "expo-font"
     ]
   }
 }
