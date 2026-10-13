@@ -10,11 +10,22 @@ import { NativeRouterLink } from '@ng-native/router';
   template: `
     <safe-area-view class="pantalla">
       <view class="cabecera">
-        <text class="titulo">Tiempos para pasta</text>
+        <text class="titulo">Tiempos para la cocción de la pasta</text>
         <text class="subtitulo">¿Qué vamos a cocinar hoy?</text>
       </view>
 
       <view class="opciones">
+        <pressable
+          accessibilityRole="button"
+          accessibilityLabel="Pasta"
+          class="opcion pasta"
+          nativeRouterLink="/pastas"
+        >
+          <text class="icono">🍝</text>
+          <text class="nombre">Pasta</text>
+          <text class="detalle">Elige el tipo de pasta y la marca</text>
+        </pressable>
+
         <pressable
           accessibilityRole="button"
           accessibilityLabel="Cronómetro"
@@ -24,17 +35,6 @@ import { NativeRouterLink } from '@ng-native/router';
           <text class="icono">⏱️</text>
           <text class="nombre">Cronómetro</text>
           <text class="detalle">Temporizador libre</text>
-        </pressable>
-
-        <pressable
-          accessibilityRole="button"
-          accessibilityLabel="Pasta"
-          class="opcion pasta"
-          nativeRouterLink="/pastas"
-        >
-          <text class="icono">🍝</text>
-          <text class="nombre">Pasta</text>
-          <text class="detalle">Elige el tipo y la marca</text>
         </pressable>
       </view>
     </safe-area-view>
@@ -53,8 +53,10 @@ import { NativeRouterLink } from '@ng-native/router';
     }
     .titulo {
       color: var(--texto);
-      font-size: 30px;
+      font-family: 'Playfair Display';
+      font-size: 32px;
       font-weight: 700;
+      text-align: center;
     }
     .subtitulo {
       color: var(--texto-suave);
@@ -85,7 +87,8 @@ import { NativeRouterLink } from '@ng-native/router';
     }
     .nombre {
       color: var(--texto);
-      font-size: 22px;
+      font-family: 'Playfair Display';
+      font-size: 24px;
       font-weight: 700;
     }
     .detalle {

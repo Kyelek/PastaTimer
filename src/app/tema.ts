@@ -4,11 +4,11 @@
  * CSS, como la barra de navegación nativa.
  */
 export const colores = {
-  fondo: '#fff8ee', // crema
+  fondo: '#f9ecd8', // trigo claro
   superficie: '#ffffff',
-  borde: '#f1e4d3',
+  borde: '#ecd9bf',
   texto: '#4a3f35',
   textoSuave: '#8a7d70',
-  melocoton: '#ffd8be',
-  salvia: '#cde5d0',
+  melocoton: '#ffcfae',
+  salvia: '#c7e3cb',
 } as const;

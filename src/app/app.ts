@@ -15,13 +15,13 @@ import { NativeStackOutlet } from '@ng-native/router';
   styles: `
     :host {
       flex: 1;
-      --fondo: #fff8ee;
+      --fondo: #f9ecd8;
       --superficie: #ffffff;
-      --borde: #f1e4d3;
+      --borde: #ecd9bf;
       --texto: #4a3f35;
       --texto-suave: #8a7d70;
-      --melocoton: #ffd8be;
-      --salvia: #cde5d0;
+      --melocoton: #ffcfae;
+      --salvia: #c7e3cb;
     }
   `,
 })
