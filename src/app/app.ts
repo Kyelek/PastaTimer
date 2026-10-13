@@ -22,6 +22,7 @@ import { NativeStackOutlet } from '@ng-native/router';
       --texto-suave: #8a7d70;
       --melocoton: #ffcfae;
       --salvia: #c7e3cb;
+      --rosa: #f6d6d6;
     }
   `,
 })

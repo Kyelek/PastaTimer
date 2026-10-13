@@ -66,3 +66,38 @@ export function opcionesDe(pasta: Pasta): Opcion[] {
     return tiempos ? [{ marca, tiempos }] : [];
   });
 }
+
+/** Los tres puntos de cocción, en el orden en que se muestran. */
+export const puntos = [
+  { clave: 'al_dente', nombre: 'Al dente' },
+  { clave: 'suave', nombre: 'Suave' },
+  { clave: 'salsa', nombre: 'Terminar en salsa' },
+] as const satisfies readonly { clave: keyof Tiempos; nombre: string }[];
+
+export type Punto = (typeof puntos)[number];
+
+function esFresca(tiempos: Tiempos): boolean {
+  return /fresca/i.test(tiempos.nota ?? '');
+}
+
+/** Pasos breves para preparar el agua y cocer la pasta, según el tipo y la marca. */
+export function instruccionesDe(pasta: Pasta, tiempos: Tiempos): string[] {
+  const pasos = [
+    'Pon a hervir abundante agua: 1 litro por cada 100 g de pasta.',
+    'Cuando hierva a borbotones, añade la sal: unos 10 g (una cucharada rasa) por litro.',
+    'Echa la pasta, remueve el primer minuto para que no se pegue y pon el temporizador.',
+  ];
+  if (pasta.id.startsWith('fideos')) {
+    pasos.push('Para sopa, cuécelos directamente en el caldo y prueba de sal antes de añadirla.');
+  }
+  if (esFresca(tiempos)) {
+    pasos.push('Es pasta fresca: se hace en pocos minutos, no te alejes del fuego.');
+  }
+  if (pasta.id === 'tortellini') {
+    pasos.push('Remueve con suavidad para que no se abran.');
+  }
+  pasos.push(
+    `«Terminar en salsa»: escúrrela ${tiempos.al_dente - tiempos.salsa} min antes y acaba la cocción en la sartén con la salsa y un poco del agua de cocción.`,
+  );
+  return pasos;
+}
