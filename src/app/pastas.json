@@ -112,7 +112,7 @@
       "nombre": "Fideos (Nº 1 - Sopa)",
       "imagen": "assets/images/fideos_n1.png",
       "tiempos": {
-        "Pastas Gallo": { "al_dente": 2, "suave": 4, "salsa": 1 },
+        "Pastas Gallo": { "al_dente": 3, "suave": 5, "salsa": 1 },
         "Barilla": null,
         "Hacendado (Mercadona)": { "al_dente": 2, "suave": 4, "salsa": 1 },
         "Combino (Lidl)": { "al_dente": 3, "suave": 5, "salsa": 1 },
