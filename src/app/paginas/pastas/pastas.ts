@@ -1,18 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
 import { Pressable, ScrollView, Text, View } from '@ng-native/components';
 import { NativeHeader, NativeRouterLink } from '@ng-native/router';
-import { opcionesDe, pastas } from '../../catalogo.ts';
+import { Buscador } from '../../buscador/buscador.ts';
+import { coincide, opcionesDe, pastas } from '../../catalogo.ts';
 
 /** Listado de tipos de pasta. Al elegir uno se pasa a elegir la marca. */
 @Component({
-  imports: [NativeHeader, NativeRouterLink, Pressable, ScrollView, Text, View],
+  imports: [Buscador, NativeHeader, NativeRouterLink, Pressable, ScrollView, Text, View],
   selector: 'app-pastas',
   host: { style: 'flex: 1' },
   template: `
     <native-header title="Tipos de pasta" />
-    <scroll-view class="pantalla" contentInsetAdjustmentBehavior="automatic">
+    <app-buscador placeholder="Buscar pasta" [(consulta)]="consulta" />
+    <scroll-view class="pantalla" keyboardShouldPersistTaps="handled">
       <view class="lista">
-        @for (pasta of pastas; track pasta.id) {
+        @for (pasta of visibles(); track pasta.id) {
           <pressable
             accessibilityRole="button"
             [accessibilityLabel]="pasta.nombre"
@@ -27,6 +29,8 @@ import { opcionesDe, pastas } from '../../catalogo.ts';
             </view>
             <text class="flecha">›</text>
           </pressable>
+        } @empty {
+          <text class="vacio">Ninguna pasta coincide con «{{ consulta() }}».</text>
         }
       </view>
     </scroll-view>
@@ -78,6 +82,12 @@ import { opcionesDe, pastas } from '../../catalogo.ts';
       color: var(--texto-suave);
       font-size: 13px;
     }
+    .vacio {
+      padding: 24px;
+      color: var(--texto-suave);
+      font-size: 15px;
+      text-align: center;
+    }
     .flecha {
       color: var(--texto-suave);
       font-size: 28px;
@@ -85,7 +95,10 @@ import { opcionesDe, pastas } from '../../catalogo.ts';
   `,
 })
 export class Pastas {
-  protected readonly pastas = pastas;
+  protected readonly consulta = signal('');
+  protected readonly visibles = computed(() =>
+    pastas.filter((pasta) => coincide(pasta.nombre, this.consulta())),
+  );
 
   protected marcasDe(pasta: (typeof pastas)[number]): string {
     const total = opcionesDe(pasta).length;

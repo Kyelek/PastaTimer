@@ -1,16 +1,20 @@
-import { Component, computed, input } from '@angular/core';
+import { Component, computed, input, signal } from '@angular/core';
 import { Pressable, ScrollView, Text, View } from '@ng-native/components';
 import { NativeHeader, NativeRouterLink } from '@ng-native/router';
-import { opcionesDe, pastaPorId } from '../../catalogo.ts';
+import { Buscador } from '../../buscador/buscador.ts';
+import { coincide, opcionesDe, pastaPorId } from '../../catalogo.ts';
 
 /** Elegir la marca de la pasta. Solo aparecen las marcas que venden ese tipo. */
 @Component({
-  imports: [NativeHeader, NativeRouterLink, Pressable, ScrollView, Text, View],
+  imports: [Buscador, NativeHeader, NativeRouterLink, Pressable, ScrollView, Text, View],
   selector: 'app-marcas',
   host: { style: 'flex: 1' },
   template: `
     <native-header [title]="pasta()?.nombre ?? 'Pasta'" />
-    <scroll-view class="pantalla" contentInsetAdjustmentBehavior="automatic">
+    @if (pasta()) {
+      <app-buscador placeholder="Buscar marca" [(consulta)]="consulta" />
+    }
+    <scroll-view class="pantalla" keyboardShouldPersistTaps="handled">
       @if (pasta(); as pasta) {
         <view class="lista">
           <text class="pregunta">¿De qué marca es tu pasta?</text>
@@ -29,6 +33,8 @@ import { opcionesDe, pastaPorId } from '../../catalogo.ts';
               </view>
               <text class="flecha">›</text>
             </pressable>
+          } @empty {
+            <text class="aviso">Ninguna marca coincide con «{{ consulta() }}».</text>
           }
         </view>
       } @else {
@@ -93,11 +99,15 @@ import { opcionesDe, pastaPorId } from '../../catalogo.ts';
   `,
 })
 export class Marcas {
+  protected readonly consulta = signal('');
+
   /** El `:pasta` de la ruta. */
   readonly pasta = input.required({ transform: pastaPorId });
 
   protected readonly opciones = computed(() => {
     const pasta = this.pasta();
-    return pasta ? opcionesDe(pasta) : [];
+    return pasta
+      ? opcionesDe(pasta).filter((opcion) => coincide(opcion.marca.nombre, this.consulta()))
+      : [];
   });
 }

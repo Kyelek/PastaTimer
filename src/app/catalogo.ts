@@ -28,13 +28,23 @@ export interface Opcion {
   readonly tiempos: Tiempos;
 }
 
-function aId(nombre: string): string {
-  return nombre
+/** En minúsculas y sin tildes, para comparar textos. */
+function normalizar(texto: string): string {
+  return texto
     .normalize('NFD')
     .replace(/[̀-ͯ]/g, '')
-    .toLowerCase()
+    .toLowerCase();
+}
+
+function aId(nombre: string): string {
+  return normalizar(nombre)
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-|-$/g, '');
+}
+
+/** Si `texto` contiene lo buscado, sin distinguir mayúsculas ni tildes. Vacío coincide con todo. */
+export function coincide(texto: string, consulta: string): boolean {
+  return normalizar(texto).includes(normalizar(consulta.trim()));
 }
 
 export const marcas: readonly Marca[] = datos.marcas.map((nombre) => ({ id: aId(nombre), nombre }));

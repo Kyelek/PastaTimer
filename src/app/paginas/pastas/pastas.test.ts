@@ -65,3 +65,33 @@ test('una pasta que no existe muestra un aviso en lugar de fallar', async () => 
 
   expect(await screen.findByText('No hemos encontrado esta pasta.')).toBeTruthy();
 });
+
+test('el buscador de pastas filtra sin distinguir mayúsculas ni tildes', async () => {
+  await abrir('/pastas');
+  const usuario = userEvent.setup();
+
+  await usuario.type(await screen.findByLabelText('Buscar pasta'), 'MACARRÓN');
+
+  expect(screen.getByRole('button', { name: 'Macarrones' })).toBeTruthy();
+  expect(screen.queryByRole('button', { name: 'Espaguetis' })).toBeNull();
+});
+
+test('el buscador avisa cuando no hay resultados y se puede borrar', async () => {
+  await abrir('/pastas');
+  const usuario = userEvent.setup();
+
+  await usuario.type(await screen.findByLabelText('Buscar pasta'), 'lasaña');
+  expect(screen.getByText('Ninguna pasta coincide con «lasaña».')).toBeTruthy();
+
+  await usuario.press(screen.getByRole('button', { name: 'Borrar búsqueda' }));
+  expect(screen.getByRole('button', { name: 'Espaguetis' })).toBeTruthy();
+});
+
+test('el buscador de marcas filtra las marcas de esa pasta', async () => {
+  await abrir('/pastas/espaguetis');
+
+  await userEvent.setup().type(await screen.findByLabelText('Buscar marca'), 'lidl');
+
+  expect(screen.getByRole('button', { name: 'Combino (Lidl)' })).toBeTruthy();
+  expect(screen.queryByRole('button', { name: 'Barilla' })).toBeNull();
+});
