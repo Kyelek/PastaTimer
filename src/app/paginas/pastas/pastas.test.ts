@@ -28,7 +28,7 @@ test('una marca sin tiempos (null) no se ofrece para esa pasta', () => {
 
   expect(nombres('espaguetis')).toContain('Giovanni Rana');
   expect(nombres('macarrones')).not.toContain('Giovanni Rana');
-  expect(nombres('macarrones')).toHaveLength(6);
+  expect(nombres('macarrones')).toHaveLength(5);
 });
 
 test('el listado muestra todos los tipos de pasta', async () => {
@@ -104,4 +104,13 @@ test('al escribir en el buscador se quita el placeholder, para que el cursor que
   await userEvent.setup().type(campo, 'pen', { skipBlur: true });
 
   expect(screen.getByLabelText('Buscar pasta').props['placeholder']).toBe('');
+});
+
+test('todos los tiempos son coherentes: salsa < al dente < suave, y salsa de al menos 1 minuto', () => {
+  for (const pasta of pastas) {
+    for (const { marca, tiempos } of opcionesDe(pasta)) {
+      const { al_dente, suave, salsa } = tiempos;
+      expect(salsa >= 1 && salsa < al_dente && al_dente < suave, `${pasta.id} · ${marca.nombre}`).toBe(true);
+    }
+  }
 });

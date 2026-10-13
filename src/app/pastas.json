@@ -14,13 +14,13 @@
       "nombre": "Espaguetis",
       "imagen": "assets/images/espaguetis.png",
       "tiempos": {
-        "Pastas Gallo": { "al_dente": 6, "suave": 8, "salsa": 7 },
-        "Barilla": { "al_dente": 8, "suave": 10, "salsa": 7 },
-        "Hacendado (Mercadona)": { "al_dente": 8, "suave": 10, "salsa": 7 },
-        "Combino (Lidl)": { "al_dente": 7, "suave": 9, "salsa": 6 },
-        "De Cecco": { "al_dente": 9, "suave": 11, "salsa": 8 },
-        "Garofalo / Rummo": { "al_dente": 9, "suave": 11, "salsa": 8 },
-        "Giovanni Rana": { "al_dente": 2, "suave": 3, "salsa": 2, "nota": "Pasta fresca" }
+        "Pastas Gallo": { "al_dente": 9, "suave": 10, "salsa": 7 },
+        "Barilla": { "al_dente": 8, "suave": 10, "salsa": 6 },
+        "Hacendado (Mercadona)": { "al_dente": 8, "suave": 10, "salsa": 6 },
+        "Combino (Lidl)": { "al_dente": 8, "suave": 10, "salsa": 6 },
+        "De Cecco": { "al_dente": 10, "suave": 12, "salsa": 8 },
+        "Garofalo / Rummo": { "al_dente": 9, "suave": 11, "salsa": 7 },
+        "Giovanni Rana": { "al_dente": 4, "suave": 5, "salsa": 2, "nota": "Pasta fresca" }
       }
     },
     {
@@ -28,12 +28,12 @@
       "nombre": "Macarrones",
       "imagen": "assets/images/macarrones.png",
       "tiempos": {
-        "Pastas Gallo": { "al_dente": 7, "suave": 9, "salsa": 6 },
-        "Barilla": { "al_dente": 9, "suave": 11, "salsa": 8 },
-        "Hacendado (Mercadona)": { "al_dente": 8, "suave": 10, "salsa": 7 },
-        "Combino (Lidl)": { "al_dente": 8, "suave": 10, "salsa": 7 },
-        "De Cecco": { "al_dente": 10, "suave": 12, "salsa": 9 },
-        "Garofalo / Rummo": { "al_dente": 10, "suave": 12, "salsa": 9 },
+        "Pastas Gallo": { "al_dente": 8, "suave": 10, "salsa": 6 },
+        "Barilla": { "al_dente": 9, "suave": 11, "salsa": 7 },
+        "Hacendado (Mercadona)": { "al_dente": 7, "suave": 9, "salsa": 5 },
+        "Combino (Lidl)": { "al_dente": 8, "suave": 10, "salsa": 6 },
+        "De Cecco": { "al_dente": 6, "suave": 8, "salsa": 4 },
+        "Garofalo / Rummo": null,
         "Giovanni Rana": null
       }
     },
@@ -42,13 +42,13 @@
       "nombre": "Tallarines / Tagliatelle",
       "imagen": "assets/images/tallarines.png",
       "tiempos": {
-        "Pastas Gallo": { "al_dente": 6, "suave": 8, "salsa": 5 },
-        "Barilla": { "al_dente": 6, "suave": 8, "salsa": 5 },
-        "Hacendado (Mercadona)": { "al_dente": 7, "suave": 9, "salsa": 6 },
-        "Combino (Lidl)": { "al_dente": 6, "suave": 8, "salsa": 5 },
-        "De Cecco": { "al_dente": 5, "suave": 7, "salsa": 4 },
-        "Garofalo / Rummo": { "al_dente": 6, "suave": 8, "salsa": 5 },
-        "Giovanni Rana": { "al_dente": 2, "suave": 3, "salsa": 2, "nota": "Pasta fresca" }
+        "Pastas Gallo": { "al_dente": 6, "suave": 8, "salsa": 4 },
+        "Barilla": { "al_dente": 6, "suave": 8, "salsa": 4 },
+        "Hacendado (Mercadona)": { "al_dente": 7, "suave": 9, "salsa": 5 },
+        "Combino (Lidl)": { "al_dente": 8, "suave": 10, "salsa": 6 },
+        "De Cecco": { "al_dente": 7, "suave": 9, "salsa": 5 },
+        "Garofalo / Rummo": { "al_dente": 6, "suave": 8, "salsa": 4 },
+        "Giovanni Rana": { "al_dente": 2, "suave": 3, "salsa": 1, "nota": "Pasta fresca" }
       }
     },
     {
@@ -56,12 +56,12 @@
       "nombre": "Penne (Plumas)",
       "imagen": "assets/images/penne.png",
       "tiempos": {
-        "Pastas Gallo": { "al_dente": 8, "suave": 10, "salsa": 7 },
-        "Barilla": { "al_dente": 11, "suave": 13, "salsa": 10 },
-        "Hacendado (Mercadona)": { "al_dente": 9, "suave": 11, "salsa": 8 },
-        "Combino (Lidl)": { "al_dente": 9, "suave": 11, "salsa": 8 },
-        "De Cecco": { "al_dente": 11, "suave": 13, "salsa": 10 },
-        "Garofalo / Rummo": { "al_dente": 11, "suave": 13, "salsa": 10 },
+        "Pastas Gallo": { "al_dente": 8, "suave": 10, "salsa": 6 },
+        "Barilla": { "al_dente": 11, "suave": 13, "salsa": 9 },
+        "Hacendado (Mercadona)": { "al_dente": 11, "suave": 13, "salsa": 9 },
+        "Combino (Lidl)": { "al_dente": 9, "suave": 11, "salsa": 7 },
+        "De Cecco": { "al_dente": 10, "suave": 12, "salsa": 8 },
+        "Garofalo / Rummo": { "al_dente": 11, "suave": 13, "salsa": 9 },
         "Giovanni Rana": null
       }
     },
@@ -70,12 +70,12 @@
       "nombre": "Fusilli (Espirales)",
       "imagen": "assets/images/fusilli.png",
       "tiempos": {
-        "Pastas Gallo": { "al_dente": 7, "suave": 9, "salsa": 6 },
-        "Barilla": { "al_dente": 11, "suave": 13, "salsa": 10 },
-        "Hacendado (Mercadona)": { "al_dente": 9, "suave": 11, "salsa": 8 },
-        "Combino (Lidl)": { "al_dente": 8, "suave": 10, "salsa": 7 },
-        "De Cecco": { "al_dente": 11, "suave": 13, "salsa": 10 },
-        "Garofalo / Rummo": { "al_dente": 11, "suave": 13, "salsa": 10 },
+        "Pastas Gallo": { "al_dente": 7, "suave": 9, "salsa": 5, "nota": "Con vegetales" },
+        "Barilla": { "al_dente": 11, "suave": 13, "salsa": 9 },
+        "Hacendado (Mercadona)": { "al_dente": 9, "suave": 11, "salsa": 7 },
+        "Combino (Lidl)": { "al_dente": 9, "suave": 10, "salsa": 7, "nota": "Con vegetales" },
+        "De Cecco": { "al_dente": 9, "suave": 11, "salsa": 7 },
+        "Garofalo / Rummo": { "al_dente": 8, "suave": 10, "salsa": 6 },
         "Giovanni Rana": null
       }
     },
@@ -84,12 +84,12 @@
       "nombre": "Farfalle (Lazos)",
       "imagen": "assets/images/farfalle.png",
       "tiempos": {
-        "Pastas Gallo": { "al_dente": 8, "suave": 10, "salsa": 7 },
-        "Barilla": { "al_dente": 11, "suave": 13, "salsa": 10 },
-        "Hacendado (Mercadona)": { "al_dente": 10, "suave": 12, "salsa": 9 },
-        "Combino (Lidl)": { "al_dente": 9, "suave": 11, "salsa": 8 },
-        "De Cecco": { "al_dente": 12, "suave": 14, "salsa": 11 },
-        "Garofalo / Rummo": { "al_dente": 11, "suave": 13, "salsa": 10 },
+        "Pastas Gallo": { "al_dente": 8, "suave": 10, "salsa": 6, "nota": "Con vegetales" },
+        "Barilla": null,
+        "Hacendado (Mercadona)": { "al_dente": 9, "suave": 11, "salsa": 7, "nota": "Con vegetales" },
+        "Combino (Lidl)": { "al_dente": 10, "suave": 12, "salsa": 8 },
+        "De Cecco": { "al_dente": 11, "suave": 13, "salsa": 9 },
+        "Garofalo / Rummo": { "al_dente": 12, "suave": 14, "salsa": 10 },
         "Giovanni Rana": null
       }
     },
@@ -98,13 +98,13 @@
       "nombre": "Tortellini (Rellenos)",
       "imagen": "assets/images/tortellini.png",
       "tiempos": {
-        "Pastas Gallo": { "al_dente": 10, "suave": 12, "salsa": 9, "nota": "Secos" },
-        "Barilla": { "al_dente": 10, "suave": 12, "salsa": 9, "nota": "Secos" },
-        "Hacendado (Mercadona)": { "al_dente": 10, "suave": 12, "salsa": 9, "nota": "Secos" },
-        "Combino (Lidl)": { "al_dente": 10, "suave": 12, "salsa": 9, "nota": "Secos" },
-        "De Cecco": { "al_dente": 12, "suave": 14, "salsa": 11, "nota": "Secos" },
-        "Garofalo / Rummo": { "al_dente": 11, "suave": 13, "salsa": 10, "nota": "Secos" },
-        "Giovanni Rana": { "al_dente": 2, "suave": 4, "salsa": 2, "nota": "Fresca" }
+        "Pastas Gallo": { "al_dente": 14, "suave": 16, "salsa": 12, "nota": "Secos" },
+        "Barilla": null,
+        "Hacendado (Mercadona)": { "al_dente": 2, "suave": 3, "salsa": 1, "nota": "Pasta fresca" },
+        "Combino (Lidl)": null,
+        "De Cecco": null,
+        "Garofalo / Rummo": null,
+        "Giovanni Rana": { "al_dente": 3, "suave": 4, "salsa": 1, "nota": "Pasta fresca (tortelloni)" }
       }
     },
     {
@@ -112,12 +112,12 @@
       "nombre": "Fideos (Nº 1 - Sopa)",
       "imagen": "assets/images/fideos_n1.png",
       "tiempos": {
-        "Pastas Gallo": { "al_dente": 2, "suave": 4, "salsa": 2 },
-        "Barilla": { "al_dente": 3, "suave": 5, "salsa": 3 },
-        "Hacendado (Mercadona)": { "al_dente": 3, "suave": 5, "salsa": 3 },
-        "Combino (Lidl)": { "al_dente": 3, "suave": 5, "salsa": 3 },
-        "De Cecco": { "al_dente": 3, "suave": 5, "salsa": 3 },
-        "Garofalo / Rummo": { "al_dente": 3, "suave": 5, "salsa": 3 },
+        "Pastas Gallo": { "al_dente": 2, "suave": 4, "salsa": 1 },
+        "Barilla": null,
+        "Hacendado (Mercadona)": { "al_dente": 2, "suave": 4, "salsa": 1 },
+        "Combino (Lidl)": { "al_dente": 3, "suave": 5, "salsa": 1 },
+        "De Cecco": { "al_dente": 3, "suave": 5, "salsa": 1 },
+        "Garofalo / Rummo": { "al_dente": 4, "suave": 6, "salsa": 2 },
         "Giovanni Rana": null
       }
     },
@@ -126,12 +126,12 @@
       "nombre": "Fideos (Nº 2 - Grosor medio)",
       "imagen": "assets/images/fideos_n2.png",
       "tiempos": {
-        "Pastas Gallo": { "al_dente": 6, "suave": 8, "salsa": 5 },
-        "Barilla": { "al_dente": 6, "suave": 8, "salsa": 5 },
-        "Hacendado (Mercadona)": { "al_dente": 6, "suave": 8, "salsa": 5 },
-        "Combino (Lidl)": { "al_dente": 6, "suave": 8, "salsa": 5 },
-        "De Cecco": { "al_dente": 7, "suave": 9, "salsa": 6 },
-        "Garofalo / Rummo": { "al_dente": 7, "suave": 9, "salsa": 6 },
+        "Pastas Gallo": { "al_dente": 6, "suave": 8, "salsa": 4 },
+        "Barilla": null,
+        "Hacendado (Mercadona)": { "al_dente": 6, "suave": 8, "salsa": 4 },
+        "Combino (Lidl)": null,
+        "De Cecco": { "al_dente": 7, "suave": 9, "salsa": 5 },
+        "Garofalo / Rummo": { "al_dente": 6, "suave": 8, "salsa": 4 },
         "Giovanni Rana": null
       }
     },
@@ -140,12 +140,12 @@
       "nombre": "Rigatoni",
       "imagen": "assets/images/rigatoni.png",
       "tiempos": {
-        "Pastas Gallo": { "al_dente": 9, "suave": 11, "salsa": 8 },
-        "Barilla": { "al_dente": 12, "suave": 14, "salsa": 11 },
-        "Hacendado (Mercadona)": { "al_dente": 11, "suave": 13, "salsa": 10 },
-        "Combino (Lidl)": { "al_dente": 10, "suave": 12, "salsa": 9 },
-        "De Cecco": { "al_dente": 13, "suave": 15, "salsa": 12 },
-        "Garofalo / Rummo": { "al_dente": 13, "suave": 15, "salsa": 12 },
+        "Pastas Gallo": null,
+        "Barilla": { "al_dente": 12, "suave": 13, "salsa": 10 },
+        "Hacendado (Mercadona)": null,
+        "Combino (Lidl)": null,
+        "De Cecco": { "al_dente": 12, "suave": 14, "salsa": 10 },
+        "Garofalo / Rummo": { "al_dente": 13, "suave": 15, "salsa": 11 },
         "Giovanni Rana": null
       }
     }
