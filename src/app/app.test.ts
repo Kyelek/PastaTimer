@@ -1,12 +1,12 @@
 import { styleSheetOf } from '@ng-native/fabric';
 import { render, screen, userEvent } from '@ng-native/testing';
 import { expect, test } from 'vitest';
-import { appProviders } from './app.config.ts';
+import { dobles } from './pruebas.ts';
 import { App } from './app.ts';
 import { EstilosGlobales } from './estilos-globales.ts';
 
 test('la pantalla principal ofrece primero la pasta y después el cronómetro', async () => {
-  await render(App, { providers: appProviders });
+  await render(App, { providers: dobles().providers });
 
   expect(await screen.findByText('Tiempos para la cocción de la pasta')).toBeTruthy();
   expect(screen.getByText('Elige el tipo de pasta y la marca')).toBeTruthy();
@@ -15,7 +15,7 @@ test('la pantalla principal ofrece primero la pasta y después el cronómetro', 
 });
 
 test('los títulos usan Playfair Display y el resto del texto Lora', async () => {
-  await render(App, { providers: appProviders, globalStyles: styleSheetOf(EstilosGlobales) });
+  await render(App, { providers: dobles().providers, globalStyles: styleSheetOf(EstilosGlobales) });
 
   const titulo = await screen.findByText('Tiempos para la cocción de la pasta');
   expect(titulo.props['fontFamily']).toMatch(/^Playfair Display/);
@@ -23,15 +23,15 @@ test('los títulos usan Playfair Display y el resto del texto Lora', async () =>
 });
 
 test('pulsar Cronómetro abre el temporizador', async () => {
-  await render(App, { providers: appProviders });
+  await render(App, { providers: dobles().providers });
 
   await userEvent.setup().press(await screen.findByRole('button', { name: 'Cronómetro' }));
 
-  expect(await screen.findByText('Aquí irá el temporizador.')).toBeTruthy();
+  expect(await screen.findByText('¿Cuánto tiempo?')).toBeTruthy();
 });
 
 test('pulsar Pasta abre el listado de pastas', async () => {
-  await render(App, { providers: appProviders });
+  await render(App, { providers: dobles().providers });
 
   await userEvent.setup().press(await screen.findByRole('button', { name: 'Pasta' }));
 
@@ -39,7 +39,7 @@ test('pulsar Pasta abre el listado de pastas', async () => {
 });
 
 test('las pantallas apiladas heredan la paleta pastel', async () => {
-  await render(App, { providers: appProviders });
+  await render(App, { providers: dobles().providers });
 
   await userEvent.setup().press(await screen.findByRole('button', { name: 'Pasta' }));
   const [detalle] = await screen.findAllByText('7 marcas');
