@@ -56,8 +56,8 @@ test('elegir la marca abre el detalle de esa pasta y marca', async () => {
 
   await userEvent.setup().press(await screen.findByRole('button', { name: 'Hacendado (Mercadona)' }));
 
-  expect(await screen.findByText('Aquí irán las instrucciones y los botones de cocción.')).toBeTruthy();
-  expect(screen.getAllByText('Hacendado (Mercadona)').length).toBeGreaterThan(0);
+  expect(await screen.findByText('Cómo prepararla')).toBeTruthy();
+  expect(screen.getAllByText('Hacendado (Mercadona)')).toHaveLength(2); // la fila de marcas y el detalle
 });
 
 test('una pasta que no existe muestra un aviso en lugar de fallar', async () => {

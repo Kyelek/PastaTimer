@@ -1,12 +1,13 @@
 import { Component, computed, signal } from '@angular/core';
-import { Pressable, ScrollView, Text, View } from '@ng-native/components';
+import { Image, Pressable, ScrollView, Text, View } from '@ng-native/components';
 import { NativeHeader, NativeRouterLink } from '@ng-native/router';
 import { Buscador } from '../../buscador/buscador.ts';
 import { coincide, opcionesDe, pastas } from '../../catalogo.ts';
+import { imagenDe } from '../../imagenes.ts';
 
 /** Listado de tipos de pasta. Al elegir uno se pasa a elegir la marca. */
 @Component({
-  imports: [Buscador, NativeHeader, NativeRouterLink, Pressable, ScrollView, Text, View],
+  imports: [Buscador, Image, NativeHeader, NativeRouterLink, Pressable, ScrollView, Text, View],
   selector: 'app-pastas',
   host: { style: 'flex: 1' },
   template: `
@@ -21,8 +22,9 @@ import { coincide, opcionesDe, pastas } from '../../catalogo.ts';
             class="fila"
             [nativeRouterLink]="['/pastas', pasta.id]"
           >
-            <!-- Hueco para la imagen de la pasta (siguiente tarea). -->
-            <view class="imagen"><text class="icono">🍝</text></view>
+            <view class="marco">
+              <image class="imagen" [source]="imagenDe(pasta.id)" resizeMode="contain" />
+            </view>
             <view class="textos">
               <text class="nombre">{{ pasta.nombre }}</text>
               <text class="detalle">{{ marcasDe(pasta) }}</text>
@@ -57,16 +59,17 @@ import { coincide, opcionesDe, pastas } from '../../catalogo.ts';
     .fila:active {
       opacity: 0.7;
     }
+    .marco {
+      width: 64px;
+      height: 64px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 16px;
+      background-color: var(--fondo);
+    }
     .imagen {
       width: 56px;
       height: 56px;
-      align-items: center;
-      justify-content: center;
-      border-radius: 14px;
-      background-color: var(--melocoton);
-    }
-    .icono {
-      font-size: 28px;
     }
     .textos {
       flex: 1;
@@ -95,6 +98,7 @@ import { coincide, opcionesDe, pastas } from '../../catalogo.ts';
   `,
 })
 export class Pastas {
+  protected readonly imagenDe = imagenDe;
   protected readonly consulta = signal('');
   protected readonly visibles = computed(() =>
     pastas.filter((pasta) => coincide(pasta.nombre, this.consulta())),
