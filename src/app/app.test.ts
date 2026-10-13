@@ -35,15 +35,15 @@ test('pulsar Pasta abre el listado de pastas', async () => {
 
   await userEvent.setup().press(await screen.findByRole('button', { name: 'Pasta' }));
 
-  expect(await screen.findByText('Aquí irá el listado de pastas.')).toBeTruthy();
+  expect(await screen.findByText('Espaguetis')).toBeTruthy();
 });
 
 test('las pantallas apiladas heredan la paleta pastel', async () => {
   await render(App, { providers: appProviders });
 
   await userEvent.setup().press(await screen.findByRole('button', { name: 'Pasta' }));
-  const aviso = await screen.findByText('Aquí irá el listado de pastas.');
+  const [detalle] = await screen.findAllByText('7 marcas');
 
   // --texto-suave, declarado en el :host de App
-  expect(aviso.props['color']).toBe('rgb(138, 125, 112)');
+  expect(detalle!.props['color']).toBe('rgb(138, 125, 112)');
 });
