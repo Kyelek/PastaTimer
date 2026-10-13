@@ -1,3 +1,4 @@
+import { Notifications } from '@ng-native/expo/notifications';
 import { render, waitFor } from '@ng-native/testing';
 import { expect, test } from 'vitest';
 import { App } from '../app.ts';
@@ -100,4 +101,21 @@ test('una alarma de hace más de una hora que nadie atendió se descarta en sile
   await waitFor(() => expect(d.disco.get('temporizador')).toBe('null'));
   expect(temporizador.fase()).toBe('parado');
   expect(sonido.sonando).toBe(false);
+});
+
+test('sin notificaciones (como en Expo Go) la cuenta atrás y la alarma dentro de la app siguen funcionando', async () => {
+  const d = dobles();
+  const { componentRef } = await render(App, {
+    providers: [...d.providers, { provide: Notifications.SOURCE, useValue: null }],
+  });
+  const temporizador = componentRef.injector.get(Temporizador);
+
+  await temporizador.iniciar(1 * MIN, 'Pasta', '');
+  expect(temporizador.fase()).toBe('contando');
+
+  d.reloj.ahora += MIN;
+  temporizador.tic();
+  await waitFor(() => expect(d.sonido.sonando).toBe(true));
+  await temporizador.apagar();
+  expect(temporizador.fase()).toBe('parado');
 });
