@@ -1,3 +1,5 @@
+@AGENTS.md
+
 # Tiempos para pasta — Guía del proyecto
 
 Este documento es la guía central del proyecto. Síguelo estrictamente.
