@@ -1,4 +1,4 @@
-import { Component, input, model } from '@angular/core';
+import { Component, input, model, signal } from '@angular/core';
 import { Pressable, Text, TextInput, View } from '@ng-native/components';
 
 /** Caja de búsqueda centrada que va encima de una lista. */
@@ -10,22 +10,27 @@ import { Pressable, Text, TextInput, View } from '@ng-native/components';
       <text class="lupa">🔍</text>
       <text-input
         class="campo"
-        [placeholder]="placeholder()"
+        [placeholder]="enfocado() ? '' : placeholder()"
         [accessibilityLabel]="placeholder()"
         [(value)]="consulta"
+        (focus)="enfocado.set(true)"
+        (blur)="enfocado.set(false)"
         autoCorrect="false"
         returnKeyType="search"
       />
-      @if (consulta()) {
-        <pressable
-          accessibilityRole="button"
-          accessibilityLabel="Borrar búsqueda"
-          class="borrar"
-          (press)="consulta.set('')"
-        >
-          <text class="x">✕</text>
-        </pressable>
-      }
+      <!-- Mismo ancho que la lupa, haya o no botón, para que el texto quede centrado de verdad. -->
+      <view class="lado">
+        @if (consulta()) {
+          <pressable
+            accessibilityRole="button"
+            accessibilityLabel="Borrar búsqueda"
+            class="borrar"
+            (press)="consulta.set('')"
+          >
+            <text class="x">✕</text>
+          </pressable>
+        }
+      </view>
     </view>
   `,
   styles: `
@@ -46,8 +51,14 @@ import { Pressable, Text, TextInput, View } from '@ng-native/components';
       border-width: 1px;
       border-color: var(--borde);
     }
+    .lupa,
+    .lado {
+      width: 24px;
+      align-items: center;
+    }
     .lupa {
       font-size: 16px;
+      text-align: center;
     }
     .campo {
       flex: 1;
@@ -58,7 +69,7 @@ import { Pressable, Text, TextInput, View } from '@ng-native/components';
       text-align: center;
     }
     .borrar {
-      padding: 6px;
+      padding: 6px 0;
     }
     .x {
       color: var(--texto-suave);
@@ -69,4 +80,10 @@ import { Pressable, Text, TextInput, View } from '@ng-native/components';
 export class Buscador {
   readonly consulta = model('');
   readonly placeholder = input('Buscar');
+
+  /**
+   * Mientras se escribe se quita el placeholder: Android pone el cursor de un campo centrado al
+   * final del placeholder, no en el centro.
+   */
+  protected readonly enfocado = signal(false);
 }

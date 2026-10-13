@@ -95,3 +95,13 @@ test('el buscador de marcas filtra las marcas de esa pasta', async () => {
   expect(screen.getByRole('button', { name: 'Combino (Lidl)' })).toBeTruthy();
   expect(screen.queryByRole('button', { name: 'Barilla' })).toBeNull();
 });
+
+test('al escribir en el buscador se quita el placeholder, para que el cursor quede centrado', async () => {
+  await abrir('/pastas');
+  const campo = await screen.findByLabelText('Buscar pasta');
+  expect(campo.props['placeholder']).toBe('Buscar pasta');
+
+  await userEvent.setup().type(campo, 'pen', { skipBlur: true });
+
+  expect(screen.getByLabelText('Buscar pasta').props['placeholder']).toBe('');
+});
