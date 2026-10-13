@@ -1,12 +1,12 @@
 import { Router } from '@angular/router';
 import { render, screen, userEvent } from '@ng-native/testing';
 import { expect, test } from 'vitest';
-import { appProviders } from '../../app.config.ts';
+import { dobles } from '../../pruebas.ts';
 import { App } from '../../app.ts';
 import { marcas, opcionesDe, pastaPorId, pastas } from '../../catalogo.ts';
 
 async function abrir(url: string) {
-  const { componentRef } = await render(App, { providers: appProviders });
+  const { componentRef } = await render(App, { providers: dobles().providers });
   await componentRef.injector.get(Router).navigateByUrl(url);
 }
 

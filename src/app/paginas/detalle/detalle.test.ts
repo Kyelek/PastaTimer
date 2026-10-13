@@ -1,13 +1,13 @@
 import { Router } from '@angular/router';
 import { render, screen, userEvent } from '@ng-native/testing';
 import { expect, test } from 'vitest';
-import { appProviders } from '../../app.config.ts';
+import { dobles } from '../../pruebas.ts';
 import { App } from '../../app.ts';
 import { pastas } from '../../catalogo.ts';
 import { imagenDe } from '../../imagenes.ts';
 
 async function abrir(url: string) {
-  const { componentRef } = await render(App, { providers: appProviders });
+  const { componentRef } = await render(App, { providers: dobles().providers });
   await componentRef.injector.get(Router).navigateByUrl(url);
 }
 
@@ -47,8 +47,9 @@ test('pulsar un punto de cocción abre el temporizador con sus minutos', async (
 
   await userEvent.setup().press(await screen.findByRole('button', { name: 'Suave' }));
 
+  // Arranca sola: 10 minutos de Barilla, punto suave.
   expect(await screen.findByText('10:00')).toBeTruthy();
-  expect(screen.getAllByText('Suave').length).toBe(2); // el botón del detalle y el título del temporizador
+  expect(screen.getByText('Espaguetis · Suave')).toBeTruthy();
 });
 
 test('una marca que no vende esa pasta muestra un aviso', async () => {
