@@ -1,5 +1,6 @@
 import { Component, computed, inject, input } from '@angular/core';
 import { Image, Pressable, ScrollView, Text, View } from '@ng-native/components';
+import { SafeArea } from '@ng-native/device';
 import { NativeHeader, NativeNavigation } from '@ng-native/router';
 import { instruccionesDe, marcaPorId, pastaPorId, puntos, type Punto } from '../../catalogo.ts';
 import { imagenDe } from '../../imagenes.ts';
@@ -13,7 +14,7 @@ import { imagenDe } from '../../imagenes.ts';
     <native-header [title]="pasta()?.nombre ?? 'Pasta'" />
     <scroll-view class="pantalla">
       @if (eleccion(); as e) {
-        <view class="contenido">
+        <view class="contenido" [style.paddingBottom]="zonaSegura.insets().bottom + 32">
           <image class="imagen" [source]="imagen()" resizeMode="contain" [alt]="e.pasta.nombre" />
 
           <view class="cabecera">
@@ -179,6 +180,9 @@ import { imagenDe } from '../../imagenes.ts';
   `,
 })
 export class Detalle {
+  /** Hueco de la barra de botones de Android abajo, para que el último elemento no quede tapado. */
+  protected readonly zonaSegura = inject(SafeArea);
+
   private readonly nav = inject(NativeNavigation);
 
   /** El `:pasta` de la ruta. */

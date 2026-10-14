@@ -1,5 +1,6 @@
-import { Component, computed, input, signal } from '@angular/core';
+import { Component, computed, inject, input, signal } from '@angular/core';
 import { Pressable, ScrollView, Text, View } from '@ng-native/components';
+import { SafeArea } from '@ng-native/device';
 import { NativeHeader, NativeRouterLink } from '@ng-native/router';
 import { Buscador } from '../../buscador/buscador.ts';
 import { coincide, opcionesDe, pastaPorId } from '../../catalogo.ts';
@@ -16,7 +17,7 @@ import { coincide, opcionesDe, pastaPorId } from '../../catalogo.ts';
     }
     <scroll-view class="pantalla" keyboardShouldPersistTaps="handled">
       @if (pasta(); as pasta) {
-        <view class="lista">
+        <view class="lista" [style.paddingBottom]="zonaSegura.insets().bottom + 24">
           <text class="pregunta">¿De qué marca es tu pasta?</text>
           @for (opcion of opciones(); track opcion.marca.id) {
             <pressable
@@ -99,6 +100,9 @@ import { coincide, opcionesDe, pastaPorId } from '../../catalogo.ts';
   `,
 })
 export class Marcas {
+  /** Hueco de la barra de botones de Android abajo, para que el último elemento no quede tapado. */
+  protected readonly zonaSegura = inject(SafeArea);
+
   protected readonly consulta = signal('');
 
   /** El `:pasta` de la ruta. */
