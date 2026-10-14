@@ -1,5 +1,6 @@
-import { Component, computed, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { Image, Pressable, ScrollView, Text, View } from '@ng-native/components';
+import { SafeArea } from '@ng-native/device';
 import { NativeHeader, NativeRouterLink } from '@ng-native/router';
 import { Buscador } from '../../buscador/buscador.ts';
 import { coincide, opcionesDe, pastas } from '../../catalogo.ts';
@@ -14,7 +15,7 @@ import { imagenDe } from '../../imagenes.ts';
     <native-header title="Tipos de pasta" />
     <app-buscador placeholder="Buscar pasta" [(consulta)]="consulta" />
     <scroll-view class="pantalla" keyboardShouldPersistTaps="handled">
-      <view class="lista">
+      <view class="lista" [style.paddingBottom]="zonaSegura.insets().bottom + 24">
         @for (pasta of visibles(); track pasta.id) {
           <pressable
             accessibilityRole="button"
@@ -98,6 +99,9 @@ import { imagenDe } from '../../imagenes.ts';
   `,
 })
 export class Pastas {
+  /** Hueco de la barra de botones de Android abajo, para que el último elemento no quede tapado. */
+  protected readonly zonaSegura = inject(SafeArea);
+
   protected readonly imagenDe = imagenDe;
   protected readonly consulta = signal('');
   protected readonly visibles = computed(() =>

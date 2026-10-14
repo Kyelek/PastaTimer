@@ -48,17 +48,31 @@ test('Empezar arranca la cuenta atrás y programa la alarma', async () => {
   expect([...programadas.values()].map((p) => p.fecha)).toEqual([reloj.ahora + 10 * MIN]);
 });
 
-test('desde el detalle de una pasta arranca sola con su título y su marca', async () => {
-  await abrir('/cronometro?minutos=9&punto=Al%20dente&pasta=Espaguetis&marca=Barilla');
+test('desde el detalle de una pasta prepara su tiempo y no empieza hasta pulsar Empezar', async () => {
+  const { temporizador, programadas, reloj } = await abrir(
+    '/cronometro?minutos=9&punto=Al%20dente&pasta=Espaguetis&marca=Barilla',
+  );
 
   expect(await screen.findByText('Espaguetis · Al dente')).toBeTruthy();
   expect(screen.getByText('Barilla')).toBeTruthy();
   expect(screen.getByText('9:00')).toBeTruthy();
+  expect(temporizador.fase()).toBe('parado');
+  expect(programadas.size).toBe(0);
+  // El tiempo lo da la pasta: no hay botones para cambiarlo.
+  expect(screen.queryByRole('button', { name: 'Añadir 1 minuto' })).toBeNull();
+
+  await userEvent.setup().press(screen.getByRole('button', { name: 'Empezar' }));
+
+  expect(await screen.findByRole('button', { name: 'Cancelar' })).toBeTruthy();
+  expect(temporizador.titulo()).toBe('Espaguetis · Al dente');
+  expect(temporizador.detalle()).toBe('Barilla');
+  expect([...programadas.values()].map((p) => p.fecha)).toEqual([reloj.ahora + 9 * MIN]);
 });
 
 test('al llegar a cero muestra ¡Listo! con Apagar y +3 min', async () => {
   const { temporizador, reloj, sonido } = await abrir('/cronometro?minutos=1&pasta=Penne&punto=Suave');
-  await screen.findByText('1:00');
+  await userEvent.setup().press(await screen.findByRole('button', { name: 'Empezar' }));
+  await screen.findByRole('button', { name: 'Cancelar' });
 
   reloj.ahora += MIN;
   temporizador.tic();
@@ -71,15 +85,17 @@ test('al llegar a cero muestra ¡Listo! con Apagar y +3 min', async () => {
   await waitFor(() => expect(sonido.sonando).toBe(false));
 });
 
-test('Apagar para la alarma y vuelve a la elección de tiempo', async () => {
+test('Apagar para la alarma y deja otra vez el tiempo preparado', async () => {
   const { temporizador, reloj, sonido } = await abrir('/cronometro?minutos=1');
-  await screen.findByText('1:00');
+  await userEvent.setup().press(await screen.findByRole('button', { name: 'Empezar' }));
+  await screen.findByRole('button', { name: 'Cancelar' });
   reloj.ahora += MIN;
   temporizador.tic();
   await screen.findByText('¡Listo!');
 
   await userEvent.setup().press(screen.getByRole('button', { name: 'Apagar' }));
 
-  expect(await screen.findByText('¿Cuánto tiempo?')).toBeTruthy();
+  expect(await screen.findByRole('button', { name: 'Empezar' })).toBeTruthy();
+  expect(screen.getByText('1:00')).toBeTruthy();
   await waitFor(() => expect(sonido.sonando).toBe(false));
 });

@@ -47,9 +47,10 @@ test('pulsar un punto de cocción abre el temporizador con sus minutos', async (
 
   await userEvent.setup().press(await screen.findByRole('button', { name: 'Suave' }));
 
-  // Arranca sola: 10 minutos de Barilla, punto suave.
+  // Queda preparado con los 10 minutos de Barilla, punto suave, esperando a «Empezar».
   expect(await screen.findByText('10:00')).toBeTruthy();
   expect(screen.getByText('Espaguetis · Suave')).toBeTruthy();
+  expect(screen.getByRole('button', { name: 'Empezar' })).toBeTruthy();
 });
 
 test('una marca que no vende esa pasta muestra un aviso', async () => {

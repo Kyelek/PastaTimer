@@ -1,5 +1,6 @@
 import { Component, computed, inject, input, numberAttribute, signal, type OnInit } from '@angular/core';
 import { Pressable, Text, View } from '@ng-native/components';
+import { SafeArea } from '@ng-native/device';
 import { NativeHeader } from '@ng-native/router';
 import { Temporizador } from '../../temporizador/temporizador.ts';
 
@@ -16,7 +17,7 @@ export function formatear(ms: number): string {
 
 /**
  * El temporizador. Desde el detalle de una pasta llega con los minutos del punto elegido en la URL
- * (`?minutos=9&punto=Al dente&pasta=...&marca=...`) y arranca solo. Desde Inicio se abre libre,
+ * (`?minutos=9&punto=Al dente&pasta=...&marca=...`), listo para que el usuario pulse «Empezar». Desde Inicio se abre libre,
  * para elegir el tiempo. Tocar la notificación de la alarma también trae aquí.
  */
 @Component({
@@ -25,35 +26,44 @@ export function formatear(ms: number): string {
   host: { style: 'flex: 1' },
   template: `
     <native-header [title]="pasta() ?? 'Cronómetro'" />
-    <view class="pantalla">
+    <view class="pantalla" [style.paddingBottom]="zonaSegura.insets().bottom + 24">
       @switch (temporizador.fase()) {
         @case ('parado') {
-          <text class="titulo">¿Cuánto tiempo?</text>
-          <text class="reloj" accessibilityRole="timer">{{ formatear(eleccion()) }}</text>
-          <view class="fila">
-            <pressable accessibilityRole="button" accessibilityLabel="Quitar 1 minuto" class="ajuste" (press)="ajustar(-1)">
-              <text class="ajuste-texto">−1 min</text>
-            </pressable>
-            <pressable accessibilityRole="button" accessibilityLabel="Añadir 1 minuto" class="ajuste" (press)="ajustar(1)">
-              <text class="ajuste-texto">+1 min</text>
-            </pressable>
-            <pressable accessibilityRole="button" accessibilityLabel="Añadir 5 minutos" class="ajuste" (press)="ajustar(5)">
-              <text class="ajuste-texto">+5 min</text>
-            </pressable>
-          </view>
-          <view class="fila">
-            @for (minutos of atajos; track minutos) {
-              <pressable
-                accessibilityRole="button"
-                [accessibilityLabel]="minutos + ' minutos'"
-                class="atajo"
-                [class.elegido]="eleccion() === minutos * MIN"
-                (press)="eleccion.set(minutos * MIN)"
-              >
-                <text class="atajo-texto">{{ minutos }}′</text>
-              </pressable>
+          @if (dePasta()) {
+            <!-- El tiempo lo da la pasta: solo se confirma. -->
+            <text class="titulo">{{ titulo() }}</text>
+            @if (marca(); as marca) {
+              <text class="detalle">{{ marca }}</text>
             }
-          </view>
+            <text class="reloj" accessibilityRole="timer">{{ formatear(eleccion()) }}</text>
+          } @else {
+            <text class="titulo">¿Cuánto tiempo?</text>
+            <text class="reloj" accessibilityRole="timer">{{ formatear(eleccion()) }}</text>
+            <view class="fila">
+              <pressable accessibilityRole="button" accessibilityLabel="Quitar 1 minuto" class="ajuste" (press)="ajustar(-1)">
+                <text class="ajuste-texto">−1 min</text>
+              </pressable>
+              <pressable accessibilityRole="button" accessibilityLabel="Añadir 1 minuto" class="ajuste" (press)="ajustar(1)">
+                <text class="ajuste-texto">+1 min</text>
+              </pressable>
+              <pressable accessibilityRole="button" accessibilityLabel="Añadir 5 minutos" class="ajuste" (press)="ajustar(5)">
+                <text class="ajuste-texto">+5 min</text>
+              </pressable>
+            </view>
+            <view class="fila">
+              @for (minutos of atajos; track minutos) {
+                <pressable
+                  accessibilityRole="button"
+                  [accessibilityLabel]="minutos + ' minutos'"
+                  class="atajo"
+                  [class.elegido]="eleccion() === minutos * MIN"
+                  (press)="eleccion.set(minutos * MIN)"
+                >
+                  <text class="atajo-texto">{{ minutos }}′</text>
+                </pressable>
+              }
+            </view>
+          }
           <pressable
             accessibilityRole="button"
             accessibilityLabel="Empezar"
@@ -200,6 +210,8 @@ export function formatear(ms: number): string {
 })
 export class Cronometro implements OnInit {
   protected readonly temporizador = inject(Temporizador);
+  /** Hueco de la barra de botones de Android abajo, para que los botones no queden tapados. */
+  protected readonly zonaSegura = inject(SafeArea);
 
   /** Query params; vacíos cuando se abre el cronómetro libre. */
   readonly minutos = input(undefined, {
@@ -212,18 +224,20 @@ export class Cronometro implements OnInit {
   protected readonly MIN = MIN;
   protected readonly formatear = formatear;
   protected readonly atajos = [3, 5, 10, 15];
-  /** El tiempo elegido en el cronómetro libre. */
+  /** El tiempo que se va a poner: el de la pasta, o el elegido en el cronómetro libre. */
   protected readonly eleccion = signal(5 * MIN);
+  /** Se llegó desde el detalle de una pasta, con su tiempo. */
+  protected readonly dePasta = computed(() => !!this.minutos());
 
   /** Título de la cuenta atrás: "Espaguetis · Al dente", o "Temporizador" en el libre. */
-  private readonly titulo = computed(() =>
+  protected readonly titulo = computed(() =>
     [this.pasta(), this.punto()].filter(Boolean).join(' · ') || 'Temporizador',
   );
 
   ngOnInit(): void {
-    // Desde el detalle de una pasta, la cuenta atrás empieza sola.
+    // Desde el detalle de una pasta se prepara su tiempo; la cuenta atrás empieza con «Empezar».
     const minutos = this.minutos();
-    if (minutos) void this.temporizador.iniciar(minutos * MIN, this.titulo(), this.marca() ?? '');
+    if (minutos) this.eleccion.set(minutos * MIN);
   }
 
   protected ajustar(minutos: number): void {
@@ -231,6 +245,6 @@ export class Cronometro implements OnInit {
   }
 
   protected empezar(): void {
-    void this.temporizador.iniciar(this.eleccion(), 'Temporizador', '');
+    void this.temporizador.iniciar(this.eleccion(), this.titulo(), this.marca() ?? '');
   }
 }
