@@ -19,17 +19,21 @@
       },
       "predictiveBackGestureEnabled": false,
       "permissions": [
-        "android.permission.USE_EXACT_ALARM"
+        "android.permission.USE_EXACT_ALARM",
+        "android.permission.MODIFY_AUDIO_SETTINGS"
       ]
     },
     "scheme": "pastatimer",
     "extra": {
       "router": {
         "root": "src/app"
+      },
+      "eas": {
+        "projectId": "39c16972-8cbf-41bb-85c7-d8523da8aacb"
       }
     },
     "plugins": [
-      "@ng-native/metro",
+      "@ng-native/metro/app.plugin.cjs",
       "expo-font",
       [
         "expo-audio",
@@ -47,6 +51,7 @@
           ]
         }
       ]
-    ]
+    ],
+    "owner": "kyelek"
   }
 }
